@@ -1,0 +1,12 @@
+/* .sidebar{
+    width: 17%;
+    border-right: 1px solid #fdd670;
+    height:100vh;
+    box-sizing: border-box;
+
+}*/
+.content-area{
+    width:100%;
+    box-sizing: border-box;
+    overflow: hidden;
+} 
