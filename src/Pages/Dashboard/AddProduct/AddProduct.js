@@ -1,42 +1,45 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useEffect } from 'react';
+import { useContext } from 'react';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
+import { AuthContext } from '../../../Context/AuthProvider/AuthProvider';
 
 const AddProduct = () => {
+    const { user } = useContext(AuthContext);
     const [price, setPrice] = useState(null);
     const [discount, setDiscount] = useState(null);
-    const [selectedDivison,setSelectedDivison] = useState('Dhaka');
-    const [districts,setDistricts] = useState([]);
-    const discountPrice = (price * discount) / 100;
-    const newPrice = Math.round(price - discountPrice);
+    const [selectedDivison, setSelectedDivison] = useState('Dhaka');
+    const [districts, setDistricts] = useState([]);
     const imageHostKey = process.env.REACT_APP_imgbb_key;
+    const discountPrice = (price * discount) / 100;
+    let newPrice = Math.round(price - discountPrice);
 
-    
-    const {data:locations =[]} = useQuery({
-        queryKey:['locations'],
-        queryFn:async()=>{
+
+    const { data: locations = [] } = useQuery({
+        queryKey: ['locations'],
+        queryFn: async () => {
             const res = await fetch('http://localhost:5000/product-locations');
             const data = await res.json();
             return data;
         }
     })
 
-    const handleSelectDistrict = (e)=>{
+    const handleSelectDistrict = (e) => {
         setSelectedDivison(e.target.value)
     }
-   
-    
-    useEffect(()=>{
+
+
+    useEffect(() => {
         fetch(`http://localhost:5000/product-locations/${selectedDivison}`)
-        .then(res => res.json())
-        .then(data =>{
-            setDistricts(data.districts)
-        })
-    },[selectedDivison]);
+            .then(res => res.json())
+            .then(data => {
+                setDistricts(data.districts)
+            })
+    }, [selectedDivison]);
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const handleAddProduct = data => {
@@ -52,7 +55,8 @@ const AddProduct = () => {
                 console.log(imgData.data.url)
                 const productData = {
                     ...data, newPrice,
-                    image: imgData.data.url
+                    image: imgData.data.url,
+                    seller: user?.email,
                 }
                 fetch('http://localhost:5000/products', {
                     method: 'POST',
@@ -66,6 +70,7 @@ const AddProduct = () => {
                         if (data.acknowledged) {
                             toast.success('Product added successfully')
                             reset();
+                            setPrice(null)
                         }
                     })
 
@@ -83,8 +88,8 @@ const AddProduct = () => {
                     <div className="flex w-full justify-between flex-wrap">
                         <select className="select select-success w-full" onChange={(e) => handleSelectDistrict(e)}>
                             <option disabled selected>Division</option>
-                           {
-                             locations.map(location =><option key={location._id}>{location.divison}</option>)
+                            {
+                                locations.map(location => <option key={location._id}>{location.divison}</option>)
                             }
                         </select>
                         <div className="form-control  w-full md:w-[49%] lg:w-[49%]">
@@ -92,11 +97,10 @@ const AddProduct = () => {
                                 <span className="text-default label-text">District Famous For</span>
                             </label>
                             <select  {...register("district")} className="select select-success w-full">
-                            <option disabled selected>Select District</option>
-                           {
-                            districts.map((district,i) =><option key={i}>{district}</option>)
-                            }
-                        </select>
+                                {
+                                    districts.map((district, i) => <option key={i}>{district}</option>)
+                                }
+                            </select>
 
                         </div>
                         <div className="form-control  w-full md:w-[49%] lg:w-[49%]">
@@ -156,6 +160,13 @@ const AddProduct = () => {
 
                         </div>
 
+                        <div className="form-control  w-full md:w-[49%] lg:w-[49%]">
+                            <label className="label">
+                                <span className="text-default label-text">Product History</span>
+                            </label>
+                            <textarea {...register("productHistory")} type="text" className="textarea  textarea-bordered h-28" />
+
+                        </div>
                         <div className="form-control  w-full md:w-[49%] lg:w-[49%]">
                             <label className="label">
                                 <span className="text-default label-text">Description</span>

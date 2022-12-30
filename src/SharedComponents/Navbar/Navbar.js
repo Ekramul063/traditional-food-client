@@ -70,8 +70,8 @@ const {data:dbUser={}}= useQuery({
         </div>
 
         <div className="navbar-center">
-        <input ref={searchRef} type="text" placeholder="Search" className="input w-[250px] lg:w-[500px]  md:w-[400px]  border-none" />
-        <button onClick={handleSearch} className='btn btn-primary ml-[-86px] lg:ml-[-83px] rounded-none rounded-r-md'>Search</button>
+        <input ref={searchRef} type="text" placeholder="Search" className="input w-[250px] lg:w-[500px]  md:w-[300px]  border-none" />
+        <button onClick={handleSearch} className='btn btn-primary ml-[-86px] lg:ml-[-83px] md:ml[-80px] rounded-none rounded-r-md'>Search</button>
         </div>
 
         <div className="navbar-end hidden lg:flex md:flex">

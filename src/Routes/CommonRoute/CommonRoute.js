@@ -10,6 +10,9 @@ import AddProduct from '../../Pages/Dashboard/AddProduct/AddProduct';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import ManageSellers from '../../Pages/Dashboard/ManageSellers/ManageSellers';
 import AddCategory from '../../Pages/Dashboard/AddCategory/AddCategory';
+import MyProducts from '../../Pages/Dashboard/MyProducts/MyProducts';
+import MyProfile from '../../Pages/Dashboard/MyProfile/MyProfile';
+import ProductDetails from '../../Pages/ProductDetails/ProductDetails';
 
 
 const router = createBrowserRouter([
@@ -21,15 +24,30 @@ const router = createBrowserRouter([
                 path:'/',
                 element:<Home></Home>
             },
+            {
+                path:'/buy-products/:id',
+                loader: async ({params}) => {
+                    return fetch(`http://localhost:5000/products-single/${params.id}`);
+                  },
+                element:<ProductDetails></ProductDetails>
+            },
         ]
     },
     {
         path:'/products',
-        loader: async ({params}) => {
+        loader: async () => {
             return fetch('http://localhost:5000/products');
           },
         element:<Products></Products>
     },
+    {
+        path:'/products/:district',
+        loader: async ({params}) => {
+            return fetch(`http://localhost:5000/products/${params.district}`);
+          },
+        element:<Products></Products>
+    },
+    
     {
         path:'/create-account',
         element:<CreateAccount></CreateAccount>
@@ -43,6 +61,10 @@ const router = createBrowserRouter([
         element:<PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
         children:[
             {
+                path:'/dashboard',
+                element:<MyProfile></MyProfile>
+            },
+            {
                 path:'/dashboard/add-product',
                 element:<PrivateRoute><AddProduct></AddProduct></PrivateRoute>
             },
@@ -53,6 +75,10 @@ const router = createBrowserRouter([
             {
                 path:'/dashboard/add-category',
                 element:<AddCategory></AddCategory>,
+            },
+            {
+                path:'/dashboard/my-products',
+                element:<MyProducts></MyProducts>,
             },
         ]
     },

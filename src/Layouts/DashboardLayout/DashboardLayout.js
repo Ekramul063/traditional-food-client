@@ -20,7 +20,7 @@ const DashboardLayout = () => {
             <div className="flex">
                 <div className="sidebar">
                     <ul className="menu menu-compact bg-base-100 w-full font-bold ">
-                        <li><Link>MyProfile</Link></li>
+                        <li><Link to={'/dashboard'}>MyProfile</Link></li>
                         {dbUser.role === 'admin' &&
                             <li><Link to={'/dashboard/manage-seller'}>Sellers</Link></li>
                         }
@@ -34,7 +34,7 @@ const DashboardLayout = () => {
                             <li><Link to="/dashboard/add-product">Add Product</Link></li>
                         }
                         {dbUser.seller &&
-                            <li><Link>My Product</Link></li>
+                            <li><Link to={'/dashboard/my-products'}>My Product</Link></li>
                         }
                         {
                             dbUser.role !== 'admin' && dbUser.seller === false &&

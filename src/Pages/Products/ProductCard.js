@@ -1,8 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import BuyProductModal from '../../SharedComponents/BuyProductModal/BuyProductModal';
 
 const ProductCard = ({ product }) => {
-    const { title, image, description, discount, newPrice, weight, brand, price } = product;
+    const { _id,title, image, description, discount, newPrice, weight, brand,price } = product;
     return (
         <div className="card w-full bg-base-100 shadow-xl relative">
             {discount &&
@@ -20,17 +21,27 @@ const ProductCard = ({ product }) => {
                     </p>}
 
                 {!discount && <p className='font-bold'>{price} Taka</p>}
+                {
+                    weight >= 1000 ?
+                    <p>Weight: {weight/1000} kg</p>
+                    :
+                    <p>Weight: {weight} gm</p>
+
+                }
 
                 {/* <p>{description}</p> */}
-                <p>{description.slice(0, 70)} .......</p>
+                <p>
+                    { description.length > 100 ?
+                    <p>{description.slice(0, 70)}......</p>
+                    :
+                    <p>{description.slice(0, 100)}</p>
+                    }
+                    </p>
                 <div className="card-actions justify-end">
                     {/* The button to open modal */}
-                    <label htmlFor="buy-product-modal"  className="btn btn-primary">Buy Now</label>
+                   <Link to={`/buy-products/${_id}`}><button className="btn btn-primary">Buy Now</button></Link>
                 </div>
             </div>
-            <BuyProductModal
-           product={product}
-            ></BuyProductModal>
         </div>
     );
 };
