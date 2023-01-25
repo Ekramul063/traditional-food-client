@@ -1,14 +1,12 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useLoaderData } from 'react-router-dom';
-import Navbar from '../../SharedComponents/Navbar/Navbar';
 import ProductCard from './ProductCard';
 
 const Products = () => {
     const products = useLoaderData([]);
     return (
         <div>
-            <Navbar></Navbar>
             <div className='p-8'>
                 <Helmet><title>products | Traditional Foodie</title></Helmet>
                 {

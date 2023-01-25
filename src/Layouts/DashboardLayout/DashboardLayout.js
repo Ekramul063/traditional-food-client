@@ -1,19 +1,21 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Navbar from '../../SharedComponents/Navbar/Navbar';
 import Footer from '../../SharedComponents/Footer/Footer';
 import { Link, Outlet } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
+import { useEffect } from 'react';
 const DashboardLayout = () => {
     const { user } = useContext(AuthContext);
     const { data: dbUser = {} } = useQuery({
         queryKey: [user?.email],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/users/${user?.email}`);
+            const res = await fetch(`https://tradional-foodie-server.vercel.app/users/${user?.email}`);
             const data = await res.json();
             return data;
         }
     })
+
     return (
         <div>
             <Navbar></Navbar>
@@ -28,7 +30,7 @@ const DashboardLayout = () => {
                             <li><Link to={'/dashboard/add-category'}>Add Category</Link></li>
                         }
                         {dbUser.seller &&
-                            <li><Link>Orders</Link></li>
+                            <li><Link to={'/dashboard/my-orders'}>My Orders</Link></li>
                         }
                         {dbUser.seller &&
                             <li><Link to="/dashboard/add-product">Add Product</Link></li>

@@ -5,7 +5,6 @@ const BuyProductModal = ({ product }) => {
 
     return (
         <div>
-            {/* Put this part before </body> tag */}
             <input type="checkbox" id="buy-product-modal" className="modal-toggle" />
             <div className="modal">
                 <div className="modal-box">

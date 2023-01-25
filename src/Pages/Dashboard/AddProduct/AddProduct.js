@@ -22,7 +22,7 @@ const AddProduct = () => {
     const { data: locations = [] } = useQuery({
         queryKey: ['locations'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/product-locations');
+            const res = await fetch('https://tradional-foodie-server.vercel.app/product-locations');
             const data = await res.json();
             return data;
         }
@@ -34,7 +34,7 @@ const AddProduct = () => {
 
 
     useEffect(() => {
-        fetch(`http://localhost:5000/product-locations/${selectedDivison}`)
+        fetch(`https://tradional-foodie-server.vercel.app/product-locations/${selectedDivison}`)
             .then(res => res.json())
             .then(data => {
                 setDistricts(data.districts)
@@ -58,7 +58,7 @@ const AddProduct = () => {
                     image: imgData.data.url,
                     seller: user?.email,
                 }
-                fetch('http://localhost:5000/products', {
+                fetch('https://tradional-foodie-server.vercel.app/products', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json',
@@ -82,7 +82,7 @@ const AddProduct = () => {
         <div className='bg-gradient-to-r from-green-300 to-blue-300  flex justify-center items-center'>
             <Helmet><title> Add-Product |Traditional Foodie</title></Helmet>
 
-            <div className='w-[90%] lg:w-[70%] md:w-[70%] px-10 py-10 shadow-2xl rounded-md my-10 '>
+            <div className='w-full lg:w-[70%] md:w-[70%] px-10 py-10 shadow-2xl rounded-md my-10 '>
                 <h3 className='text-2xl font-bold text-center mb-5'>Add Product</h3>
                 <form onSubmit={handleSubmit(handleAddProduct)}>
                     <div className="flex w-full justify-between flex-wrap">

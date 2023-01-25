@@ -1,30 +1,29 @@
-
-import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useContext } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
-import Loading from '../../Components/Loading/Loading';
 import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
+import Loading from '../../Components/Loading/Loading'
+import { Navigate, useLocation } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 
 const AdminRoute = ({children}) => {
     const {user,loading} = useContext(AuthContext);
-    const location = useLocation();
-    const {data:dbUser,isLoading} = useQuery({
+    const {data: dbUser = {},isLoading } = useQuery({
         queryKey:['user'],
         queryFn:async()=>{
-            const res = await fetch(`http://localhost:5000/sellers`);
+            const res = await fetch(`https://tradional-foodie-server.vercel.app/users/${user?.email}`);
             const data = await res.json();
             return data;
         }
     })
-    
+    const location = useLocation();
     if(loading || isLoading){
         return <Loading></Loading>
     }
-    if(user&&dbUser.role==='admin'){
-        return children
+    if(dbUser.role !== 'admin'){
+        return <Navigate to='/login' state={{from:location}} replace></Navigate>
     }
-    return<Navigate to={'/login'} state={{from:location}} replace></Navigate>
+    return children;
 };
+
 
 export default AdminRoute;

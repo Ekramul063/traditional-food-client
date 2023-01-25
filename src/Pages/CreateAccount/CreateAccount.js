@@ -11,14 +11,13 @@ import useToken from '../../hooks/useToken/useToken';
 const CreateAccount = () => {
     const { createAccount, updateUserInfo } = useContext(AuthContext);
     const [createAccountError, setCreateAccountError] = useState('');
-    const [createUserEmail,setCreateUserEmail] = useState('');
+    const [createUserEmail, setCreateUserEmail] = useState('');
     const navigate = useNavigate();
     const [token] = useToken(createUserEmail);
-    if(token){
-       navigate('/')
-       toast.success('Create account successfully')
+    if (token) {
+        navigate('/')
+        toast.success('Create account successfully');
     }
-    
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
     const handleCreateAccount = data => {
@@ -28,42 +27,65 @@ const CreateAccount = () => {
         }
         setCreateAccountError('');
 
-        createAccount(data.email, data.password)
-            .then(userCredential => {
-                const user = userCredential.user;
-                saveData(data.name,data.email,data.phone,data.seller);
+        if (data.image) {
+            const image = data.image[0];
+            const formData = new FormData();
+            formData.append('image', image);
+            fetch(`https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_imgbb_key}`, {
+                method: 'POST',
+                body: formData
             })
-            .catch(error => setCreateAccountError(error.message));
+                .then(res => res.json())
+                .then(imageData => {
+                    if (imageData) {
 
-            const saveData = (name,email,phone,seller)=>{
-                const userInfo={
-                    name,email,phone,seller
-                }
-                fetch('http://localhost:5000/users',{
-                    method:'POST',
-                    headers:{
-                       'content-type':'application/json' 
-                    },
-                    body:JSON.stringify(userInfo)
-                })
+                        createAccount(data.email, data.password)
+                            .then(result => {
+                                const userInfo = {
+                                    displayName: data.name,
+                                    photoURL: imageData.data.url,
+                                    phoneNumber: data.phone,
+                                }
+                                updateUserInfo(userInfo)
+                                    .then(() => { })
+                                    .catch(err => console.log(err));
+
+                                saveData(imageData.data.url,data.name, data.email, data.phone, data.seller);
+                            })
+                            .catch(error => setCreateAccountError(error.message));
+
+                    }
+                });
+        }
+
+        const saveData = (image,name, email, phone, seller) => {
+            const userInfo = {
+                image,name, email, phone, seller
+            }
+            fetch('https://tradional-foodie-server.vercel.app/users', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(userInfo)
+            })
                 .then(res => res.json())
                 .then(data => {
-                    if(data.acknowledged){
+                    if (data.acknowledged) {
                         setCreateUserEmail(email);
+                        reset();
                     }
-                   
-                  
-                 
+
                 })
-            }
+        }
     }
 
 
     return (
         <div className='bg-gradient-to-r from-green-300 to-blue-300 h-full flex justify-center items-center'>
-                        <Helmet><title>Create-Account | Traditional Foodie</title></Helmet>
+            <Helmet><title>Create-Account | Traditional Foodie</title></Helmet>
 
-            <div className='w-[80%] lg:w-[38%] md:[38%] px-10 py-10 shadow-2xl rounded-md'>
+            <div className='w-full lg:w-[38%] md:[38%] px-10 py-10 shadow-2xl rounded-md'>
                 <h3 className='text-2xl font-bold text-center mb-5'>Create Account</h3>
                 <form onSubmit={handleSubmit(handleCreateAccount)}>
                     <div className="form-control">
@@ -89,7 +111,7 @@ const CreateAccount = () => {
                     </div>
                     <div className="form-control">
                         <label className="label">
-                            <span className="text-default label-text">Pssword</span>
+                            <span className="text-default label-text">Password</span>
                         </label>
                         <input {...register("password",
                             {
@@ -102,8 +124,8 @@ const CreateAccount = () => {
                                 },
                                 pattern: { value: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])/, message: 'Password must have uppercase, number and special characters' }
                             }
-                        )} 
-                         type="Password" className="input input-bordered" />
+                        )}
+                            type="Password" className="input input-bordered" />
                         {errors.password && <span className='text-red-800'>{errors.password.message}</span>}
                     </div>
                     <div className="form-control">
@@ -111,11 +133,17 @@ const CreateAccount = () => {
                             <span className="text-default label-text">Confirm Password</span>
                         </label>
                         <input  {...register("confirmPassword", { required: "Confirm Password field is required" })}
-                         type="password" className="input input-bordered" />
+                            type="password" className="input input-bordered" />
                         {errors.confirmPassword && <span className='text-red-800'>{errors.confirmPassword.message}</span>}
-                        {createAccountError &&
-                            <p className='text-red-800'>{createAccountError}</p>
-                        }
+
+                    </div>
+                    <div className="form-control  w-full">
+                        <label className="label">
+                            <span className="text-default label-text">profile pictures</span>
+                        </label>
+                        <input  {...register("image")} type="file" className="file-input file-input-bordered file-input-secondary w-full" />
+
+
                     </div>
                     <div className="form-control mt-5">
                         <div className=" flex justify-between">
@@ -127,6 +155,9 @@ const CreateAccount = () => {
                     <div className="form-control mt-6">
                         <button type='submit' className="btn btn-primary">Create Account</button>
                     </div>
+                    {createAccountError &&
+                        <p className='text-red-800'>{createAccountError}</p>
+                    }
 
                     <p className='text-center font-semibold mt-3'>Have an account Traditional Foodie ?<Link to={'/Login'} className='underline text-blue-800 ml-2'> Login</Link></p>
 
