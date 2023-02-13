@@ -20,14 +20,11 @@ const DashboardLayout = () => {
         <div>
             <Navbar></Navbar>
             <div className="flex">
-                <div className="sidebar">
-                    <ul className="menu menu-compact bg-base-100 w-full font-bold ">
+                <div className="sidebar w-[230px] px-5 bg-[#4c4a4a] h-[100vh]">
+                    <ul className="menu menu-compact bg-black-500 w-full font-bold text-[#ffffffe8]">
                         <li><Link to={'/dashboard'}>MyProfile</Link></li>
                         {dbUser.role === 'admin' &&
                             <li><Link to={'/dashboard/manage-seller'}>Sellers</Link></li>
-                        }
-                        {dbUser.role === 'admin' &&
-                            <li><Link to={'/dashboard/add-category'}>Add Category</Link></li>
                         }
                         {dbUser.seller &&
                             <li><Link to={'/dashboard/my-orders'}>My Orders</Link></li>

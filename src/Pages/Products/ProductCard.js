@@ -12,7 +12,7 @@ const ProductCard = ({ product }) => {
 
             <figure><img className='w-full h-[250px]' src={image} alt="Product" /></figure>
             <div className="card-body" style={{flex:'none'}}>
-                <h2 className="card-title">{title}</h2>
+               <Link to={`/buy-products/${_id}`}><h2 className="card-title">{title}</h2></Link>
                 {discount &&
                     <p className='font-bold'>{newPrice} Taka
                         <del className='ml-5 text-red-700'>  {
@@ -30,13 +30,13 @@ const ProductCard = ({ product }) => {
                 }
 
                 {/* <p>{description}</p> */}
-                <p>
+                {/* <p>
                     {description.length > 100 ?
                         <p>{description.slice(0, 70)}......</p>
                         :
                         <p>{description.slice(0, 100)}</p>
                     }
-                </p>
+                </p> */}
                 <div className="card-actions justify-end">
                     {/* The button to open modal */}
                     <Link to={`/buy-products/${_id}`}> <button className="btn btn-primary">Buy</button> </Link>

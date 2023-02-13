@@ -9,6 +9,12 @@ import { toast } from 'react-hot-toast';
 import { AuthContext } from '../../../Context/AuthProvider/AuthProvider';
 
 const AddProduct = () => {
+   
+    //  {"district":"Sylhet","Upazilas":[ "Balaganj", "Biyanibazar", "Biswanath", "Companyganj", "Fenchuganj", "Golapganj", "Goainghat", "Jaintapur", "Kanaighat","Sylhet Sadar", "Jokiganj"," Dakshin Surma", "Osmani"]},
+    //  {"district":"Moulvibazar","Upazilas":[ "Baralekha", "Kamalganj", "Kulaura", "Moulvibazar Sadar", "Rajnagar", "Srimangal", "Juri"]},
+    //  {"district":"Habiganj","Upazilas":[ "Nabiganj", "Bahubal", "Ajmiriganj", "Baniachang", "Lakhai", "Chunarughat", "Habiganj Sadar"," Madhavpur Upazila", "Shaistaganj"]},
+    //  {"district":"Sunamganj","Upazilas":[  "Sunamganj Sadar", "South Sunamganj", "Biswambharpur", "Chatak", "Jagannathpur", "Doarabazar", "Tahirpur", "Dharmapasha", "Jamalganj", "Shalla", "Dirai"]}
+     
     const { user } = useContext(AuthContext);
     const [price, setPrice] = useState(null);
     const [discount, setDiscount] = useState(null);
@@ -33,6 +39,13 @@ const AddProduct = () => {
     }
 
 
+    useEffect(() => {
+        fetch(`https://tradional-foodie-server.vercel.app/product-locations/${selectedDivison}`)
+            .then(res => res.json())
+            .then(data => {
+                setDistricts(data.districts)
+            })
+    }, [selectedDivison]);
     useEffect(() => {
         fetch(`https://tradional-foodie-server.vercel.app/product-locations/${selectedDivison}`)
             .then(res => res.json())

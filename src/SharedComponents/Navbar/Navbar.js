@@ -1,7 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import { useRef } from 'react';
-import { useState } from 'react';
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../asets/logo.png'
@@ -9,12 +7,6 @@ import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
-  const [search, setSearch] = useState('');
-  const searchRef = useRef();
-  const handleSearch = () => {
-    setSearch(search.current.value)
-  }
-
   const handleLogOut = () => {
     logOut()
       .then(() => { })
@@ -67,11 +59,6 @@ const Navbar = () => {
           <div className='max-w-[120px]'>
             <Link to={'/'}><img className='w-full' src={logo} /></Link>
           </div>
-        </div>
-
-        <div className="navbar-center">
-          <input ref={searchRef} type="text" placeholder="Search" className="input w-[250px] lg:w-[500px]  md:w-[300px]  border-none" />
-          <button onClick={handleSearch} className='btn btn-primary ml-[-86px] lg:ml-[-83px] md:ml[-80px] rounded-none rounded-r-md'>Search</button>
         </div>
 
         <div className="navbar-end hidden lg:flex md:flex">

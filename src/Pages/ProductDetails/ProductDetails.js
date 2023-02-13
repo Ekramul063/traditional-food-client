@@ -16,7 +16,7 @@ const ProductDetails = () => {
    const buttonRef = useRef(null);
   
 
-    const handleBuyProduct = (product, price, quantity) => {
+    const handleBuyProduct = (product, price, quantity,productHistory) => {
         buttonRef.current.disabled = false;
         const buyProduct = {
             image:product.image,
@@ -51,11 +51,11 @@ const ProductDetails = () => {
         }
     },[product])
     return (
-        <div className='flex max-w-[1000px] mx-auto justify-between py-10 px-5 bg-slate-400'>
+        <div className='flex max-w-[1000px] mx-auto justify-between py-10 px-5 bg-slate-300'>
             <Helmet><title>buy-product || Traditional Foodie</title></Helmet>
             <div className='w-[38%]'>
                 <img src={`${product.image}`} alt='product image' className='w-full' />
-                <p className='mt-5 font-semibold text-red-900 text-justify'>{product.description}</p>
+                <p className='mt-5 font-semibold text-red-900 text-justify'>{product.productHistory && product.productHistory}</p>
             </div>
             <div className='w-[57%]'>
                 <h3 className='text-2xl font-bold pb-5 ' style={{ borderBottom: '1px solid' }} >{product.title}</h3>

@@ -45,6 +45,23 @@ const ManageSellers = () => {
             })
     }
  
+    const handleMakeAdmin = (id)=>{
+        // fetch(`https://tradional-foodie-server.vercel.app/sellers/${id}`,{
+        //     method:'PATCH',
+        //     headers:{
+        //         'content-type':'application/json',
+        //         'authorization':`bearer ${localStorage.getItem('accessToken')}`
+        //     },
+        //     body:JSON.stringify({role:'admin'})
+        // })
+        // .then(res=> res.json())
+        // .then(data =>{
+        //    if(data.modifiedCount > 0){
+        //     toast.success('make admin successfully')
+        //    }
+        // })
+        
+    }
 
     if (isLoading) {
         return <Loading></Loading>
@@ -70,14 +87,13 @@ const ManageSellers = () => {
                         {
                             sellers.map(seller =>
                                 <tr key={seller._id} >
-                                   { console.log(seller)}
                                     <td>
                                         <img src={`${seller.image}`} alt=""  className='w-12 w-13'/>
                                         {seller.name}
                                     </td>
                                     <td>{seller.email}</td>
                                     <td>{seller.phone}</td>
-                                    <td><button className='btn btn-xs text-white bg-green-600'> Make Admin</button></td>
+                                    <td>{seller.role !== 'admin' && <button onClick={()=>handleMakeAdmin(seller._id)} className='btn btn-xs text-white bg-green-600'> Make Admin</button>}</td>
                                     <td>
                                         <label htmlFor="confirmation-modal" onClick={() => setDeleteingSeller(seller)} className='btn btn-xs text-white bg-red-800'> delete</label>
                                     </td>
@@ -97,7 +113,9 @@ const ManageSellers = () => {
                         <div><img src={`${seller.image}`} alt=""  className='w-12 w-13 block'/>{seller.name}</div>
                         <div>{seller.email}</div>
                         <div>{seller.phone}</div>
-                        <div><button className='btn btn-xs text-white bg-green-600'> Make Admin</button>   <label htmlFor="confirmation-modal" onClick={() => setDeleteingSeller(seller)} className='btn btn-xs text-white bg-red-800'> delete</label></div>
+                       {<div>
+                        {seller.role !== 'admin' &&<button className='btn btn-xs text-white bg-green-600'> Make Admin</button>}   
+                       <label htmlFor="confirmation-modal" onClick={() => setDeleteingSeller(seller)} className='btn btn-xs text-white bg-red-800'> delete</label></div>}
 
                     </div>
                 )
