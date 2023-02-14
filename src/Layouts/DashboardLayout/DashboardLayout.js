@@ -1,12 +1,11 @@
 import React, { useContext, useState } from 'react';
 import Navbar from '../../SharedComponents/Navbar/Navbar';
-import Footer from '../../SharedComponents/Footer/Footer';
 import { Link, Outlet } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
-import { useEffect } from 'react';
 const DashboardLayout = () => {
     const { user } = useContext(AuthContext);
+    const [openSidebar,setOpenSidebar]= useState(false);
     const { data: dbUser = {} } = useQuery({
         queryKey: [user?.email],
         queryFn: async () => {
@@ -18,9 +17,9 @@ const DashboardLayout = () => {
 
     return (
         <div>
-            <Navbar></Navbar>
+            <Navbar setOpenSidebar={setOpenSidebar} openSidebar={openSidebar}></Navbar>
             <div className="flex">
-                <div className="sidebar w-[230px] px-5 bg-[#4c4a4a] h-[100vh]">
+                <div className={`transition-all sidebar w-[200px] lg:w-[230px] lg:px-5 bg-[#4c4a4a] h-[100vh] ${openSidebar?"block":"hidden"} lg:block md:block`}>
                     <ul className="menu menu-compact bg-black-500 w-full font-bold text-[#ffffffe8]">
                         <li><Link to={'/dashboard'}>MyProfile</Link></li>
                         {dbUser.role === 'admin' &&

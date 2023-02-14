@@ -7,10 +7,10 @@ const Products = () => {
     const products = useLoaderData([]);
     return (
         <div>
-        <div className="lg:w-1/2 md:w-3/2 sm:w-full p-3 mx-auto">
+        {/* <div className="lg:w-1/2 md:w-3/2 sm:w-full p-3 mx-auto">
           <input  type="text" placeholder="Search" className="input w-full input-border border-primary" />
           <button className='bg-primary border-primary mt-[-1] h-[47px] lg:w-[120px] md:w-[90px] sm:w-[90px] lg:ml-[-121px] md:ml-[-91px] sm:ml[-91px]'>Search</button>
-        </div>
+        </div> */}
             <div className='p-8'>
                 <Helmet><title>products | Traditional Foodie</title></Helmet>
                 {

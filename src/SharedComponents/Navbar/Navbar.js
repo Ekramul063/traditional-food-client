@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import logo from '../../asets/logo.png'
 import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
 
-const Navbar = () => {
+const Navbar = ({setOpenSidebar,openSidebar}) => {
   const { user, logOut } = useContext(AuthContext);
   const handleLogOut = () => {
     logOut()
@@ -67,7 +67,10 @@ const Navbar = () => {
           </ul>
 
         </div>
+      <div className='flex flex-row-reverse w-full lg:hidden md:hidden'>
+      <button onClick={()=>openSidebar?setOpenSidebar(false):setOpenSidebar(true)} className='btn btn-xs bg-primary font-bold text-white border-none transition-all'><small>Sidebar</small></button>
 
+      </div>
       </div>
 
     </div>
