@@ -14,7 +14,7 @@ import EditProductModal from '../../../SharedComponents/EditProductModal/EditPro
 const MyProducts = () => {
     const { user } = useContext(AuthContext);
     const [deletingProduct, setDeleteingproduct] = useState(null);
-    const [editingProduct,setEditingProduct] = useState(null);
+    const [editingProduct, setEditingProduct] = useState(null);
     const closeModal = () => {
         setDeleteingproduct(null);
     }
@@ -52,7 +52,7 @@ const MyProducts = () => {
                 <Helmet>
                     <title>My-Products|Traditional Foodie</title>
                 </Helmet>
-                <div className="overflow-x-auto hidden md:block lg:block">
+                <div className=" hidden md:block lg:block">
 
                     <table className="table w-full">
                         <thead>
@@ -94,7 +94,7 @@ const MyProducts = () => {
                                         <td>
                                             {product.discount}%
                                         </td>
-                                        <td> <label htmlFor="editProduct-modal"  className='btn btn-xs text-white bg-green-500'onClick={()=> setEditingProduct(product)}>Edit <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-4">
+                                        <td> <label htmlFor="editProduct-modal" className='btn btn-xs text-white bg-green-500' onClick={() => setEditingProduct(product)}>Edit <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-4">
                                             <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
                                             <path d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" />
                                         </svg>
@@ -117,9 +117,11 @@ const MyProducts = () => {
                 </div>
                 {
                     myProducts.map(product =>
-                        <div key={product._id} className="lg:hidden md:hidden py-3 border-spacing-2 border px-5 overflow-auto">
-                            <div><img src={`${product.image}`} alt="" className='w-[100px] max-h-[80px] block mb-2' />{product.title}</div>
-                            <div>{product.title}</div>
+                        <div key={product._id} className="lg:hidden md:hidden py-4 px-5  w-full  border-spacing-2  mb-3 border">
+                            <div>
+                                <img src={`${product.image}`} alt="" className='w-[100px] max-h-[80px] block mb-2' />
+                            </div>
+                            <h2>{product.title}</h2>
 
                             <h3>
                                 Price: {
@@ -160,16 +162,16 @@ const MyProducts = () => {
                         highlightsColor={'red-800'}
                     >
                     </ConfirmationModal>}
-                    {
-                        editingProduct &&
-                        <EditProductModal 
+                {
+                    editingProduct &&
+                    <EditProductModal
                         product={editingProduct}
                         setEditingProduct={setEditingProduct}
                         refetch={refetch}
-                        >
+                    >
 
-                        </EditProductModal>
-                    }
+                    </EditProductModal>
+                }
             </div>
 
         </div>

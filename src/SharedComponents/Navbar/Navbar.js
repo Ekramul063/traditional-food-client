@@ -67,10 +67,6 @@ const Navbar = ({setOpenSidebar,openSidebar}) => {
           </ul>
 
         </div>
-      <div className='flex flex-row-reverse w-full lg:hidden md:hidden'>
-      <button onClick={()=>openSidebar?setOpenSidebar(false):setOpenSidebar(true)} className='btn btn-xs bg-primary font-bold text-white border-none transition-all'><small>Sidebar</small></button>
-
-      </div>
       </div>
 
     </div>

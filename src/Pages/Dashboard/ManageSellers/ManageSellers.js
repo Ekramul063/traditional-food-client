@@ -11,16 +11,16 @@ import ConfirmationModal from '../../../SharedComponents/ConfirmationModal/Confi
 
 const ManageSellers = () => {
     const [deletingSeller, setDeleteingSeller] = useState(null);
-    const {user} = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     const handleCloseModal = () => {
         setDeleteingSeller(null)
     }
     const { data: sellers = [], isLoading, refetch } = useQuery({
         queryKey: ['sellers'],
         queryFn: async () => {
-            const res = await fetch('https://tradional-foodie-server.vercel.app/sellers',{
-                headers:{
-                    'authorization':`bearer ${localStorage.getItem('accessToken')}`
+            const res = await fetch('https://tradional-foodie-server.vercel.app/sellers', {
+                headers: {
+                    'authorization': `bearer ${localStorage.getItem('accessToken')}`
                 }
             });
             const data = await res.json();
@@ -31,8 +31,8 @@ const ManageSellers = () => {
     const handleDeleteSeller = (seller) => {
         fetch(`https://tradional-foodie-server.vercel.app/users-delete/${seller._id}`, {
             method: 'DELETE',
-            headers:{
-                'authorization':`bearer ${localStorage.getItem('accessToken')}`
+            headers: {
+                'authorization': `bearer ${localStorage.getItem('accessToken')}`
             }
         })
             .then(res => res.json())
@@ -44,8 +44,8 @@ const ManageSellers = () => {
                 }
             })
     }
- 
-    const handleMakeAdmin = (id)=>{
+
+    const handleMakeAdmin = (id) => {
         // fetch(`https://tradional-foodie-server.vercel.app/sellers/${id}`,{
         //     method:'PATCH',
         //     headers:{
@@ -60,18 +60,18 @@ const ManageSellers = () => {
         //     toast.success('make admin successfully')
         //    }
         // })
-        
+
     }
 
     if (isLoading) {
         return <Loading></Loading>
     }
     return (
-        <div>
+        <div className='px-3 max-auto'>
             <Helmet>
                 <title>Mange-Seller|Traditional Foodie</title>
             </Helmet>
-            <div className="overflow-x-auto hidden md:block lg:block">
+            <div className=" hidden md:block lg:block">
                 <table className="table w-full">
 
                     <thead>
@@ -88,12 +88,12 @@ const ManageSellers = () => {
                             sellers.map(seller =>
                                 <tr key={seller._id} >
                                     <td>
-                                        <img src={`${seller.image}`} alt=""  className='w-12 w-13'/>
+                                        <img src={`${seller.image}`} alt="" className='w-12 w-13' />
                                         {seller.name}
                                     </td>
                                     <td>{seller.email}</td>
                                     <td>{seller.phone}</td>
-                                    <td>{seller.role !== 'admin' && <button onClick={()=>handleMakeAdmin(seller._id)} className='btn btn-xs text-white bg-green-600'> Make Admin</button>}</td>
+                                    <td>{seller.role !== 'admin' && <button onClick={() => handleMakeAdmin(seller._id)} className='btn btn-xs text-white bg-green-600'> Make Admin</button>}</td>
                                     <td>
                                         <label htmlFor="confirmation-modal" onClick={() => setDeleteingSeller(seller)} className='btn btn-xs text-white bg-red-800'> delete</label>
                                     </td>
@@ -109,15 +109,21 @@ const ManageSellers = () => {
             </div>
             {
                 sellers.map(seller =>
-                    <div key={seller._id} className="lg:hidden md:hidden py-3 flex flex-col  border-spacing-2 border px-5 overflow-scroll">
-                        <div><img src={`${seller.image}`} alt=""  className='w-12 w-13 block'/>{seller.name}</div>
-                        <div>{seller.email}</div>
-                        <div>{seller.phone}</div>
-                       {<div>
-                        {seller.role !== 'admin' &&<button className='btn btn-xs text-white bg-green-600'> Make Admin</button>}   
-                       <label htmlFor="confirmation-modal" onClick={() => setDeleteingSeller(seller)} className='btn btn-xs text-white bg-red-800'> delete</label></div>}
+                    
+                        <div key={seller._id} className="lg:hidden md:hidden py-3 sm:flex sm:items-center  block mb-3   border-spacing-2 border px-5">
+                            <div ><img src={`${seller.image}`} alt="" className='w-12 w-13 block' /></div>
+                            <div className='sm:ml-5'>
+                                <h3>{seller.name}</h3>
+                                <div>{seller.email}</div>
+                                <div>{seller.phone}</div>
+                            </div>
+                            <div className='sm:ml-5'>
+                                {seller.role !== 'admin' && <button className='btn btn-xs text-white bg-green-600 mr-2'> Make Admin</button>}
+                                <label htmlFor="confirmation-modal" onClick={() => setDeleteingSeller(seller)} className='btn btn-xs text-white bg-red-800'> delete</label>
+                            </div>
 
-                    </div>
+                        </div>
+                    
                 )
             }
             {

@@ -43,7 +43,7 @@ const MyOrders = () => {
 
     }
     return (
-        <div>
+        <div className='px-3 mx-auto'>
 
             <div className='hidden lg:block md:block'>
                 <table className="table w-full">
@@ -83,12 +83,20 @@ const MyOrders = () => {
             </div>
 
             {myOrders?.map(order => <div className='lg:hidden md:hidden' key={order._id}>
-                <div><img src={`${order.image}`} alt="" className='w-[100px] max-h-[80px] block mb-2' /></div>
+                <div className='sm:flex block mb-3 sm:items-center'>
+                <div className=''>
+                    <img src={`${order.image}`} alt="" className='w-[100px] max-h-[80px] block mb-2' />
+                </div>
+                <div className='sm:pl-4'>
                 <h2 className='font-semibold'>{order.title}{console.log(order)}</h2>
                 <p>Quantity: {order.quantity}</p>
                 <p className='mb-1'>Price: {order.price}</p>
-                <button className='text-white font-bold btn btn-xs bg-green-600 mr-2'>paynow</button>
+                </div>
+                <div className='sm:ml-2'>
+                <button className='sm:ml-2 text-white font-bold btn btn-xs bg-green-600 mr-2 ml-[0!important]'>paynow</button>
                 <label htmlFor="confirmation-modal" onClick={() => setDeleteingOrder(order)} className='btn btn-xs text-white bg-red-800'> Cancel</label>
+                </div>
+                </div>
 
 
             </div>
