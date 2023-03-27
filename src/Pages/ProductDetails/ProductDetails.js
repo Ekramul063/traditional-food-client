@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { toast } from 'react-hot-toast';
-import { useLoaderData, useNavigate } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
 
 const ProductDetails = () => {
@@ -12,14 +12,16 @@ const ProductDetails = () => {
     const { user } = useContext(AuthContext);
     const [quantity, setQuantity] = useState(1);
     const [price, setPrice] = useState(0);
-    const [makeHidden, setMakeHidden] = useState('');
+    const[loading,setLoading]= useState('');
     const buttonRef = useRef(null);
-    const navigate = useNavigate();
 
 
     const handleBuyProduct = (product, price, quantity, productHistory) => {
+        setLoading(true)
         if(!user?.uid){
+            setLoading(false);
             return toast.error('Please log in first');
+
 
         }
         buttonRef.current.disabled = false;
@@ -42,7 +44,9 @@ const ProductDetails = () => {
             .then(res => res.json())
             .then(data => {
                 if (data.acknowledged) {
-                    toast.success('Purchase product successfully')
+                    toast.success('Purchase product successfully');
+                    setLoading(false);
+                    
                 }
             });
 
@@ -85,7 +89,7 @@ const ProductDetails = () => {
                         </svg>
                     </div>
                     <div className="card-actions py-3">
-                        <button ref={buttonRef}  className={`btn btn-primary ${makeHidden} w-[210px]`}  onClick={() => {handleBuyProduct(product, price, quantity)}}>Buy Now</button>
+                        <button  disabled={loading} ref={buttonRef}  className={`btn btn-primary w-[210px] disabled:opacity-[0.6]`}  onClick={() => {handleBuyProduct(product, price, quantity)}}>Buy Now</button>
                     </div>
                 </div>
             </div>
@@ -94,46 +98,7 @@ const ProductDetails = () => {
                  <p className='mt-5 font-semibold text-red-900 text-justify'> <span className='font bold text-red-700 text-lg block underline'>History of this Food</span>{ product.productHistory}</p>
             }
         </div>
-        // <div className='lg:flex max-w-[1000px] mx-auto justify-between py-10 px-5 bg-slate-300 box-border'>
-        //     
-        //     <div className='lg:w-[38%] w-full'>
-        //         <img src={`${product.image}`} alt='product image' className='w-full max-w-[300px]' />
-        //         <p className='mt-5 font-semibold text-red-900 text-justify'>{product.productHistory && product.productHistory}</p>
-        //     </div>
-        //     <div className='lg:w-[57%] w-full'>
-        //         <h3 className='text-2xl font-bold pb-5 ' style={{ borderBottom: '1px solid' }} >{product.title}</h3>
-        //         {product.discount &&
-        //             <p className='font-bold text-2xl'>{product.newPrice} Taka<br />
-        //                 <del className=' text-red-700 text-xl'>  {
-        //                     product.price
-        //                 }</del><span className='text-xl'> - {product.discount}%</span>
-        //             </p>}
-        //         {!product.discount && <p className='font-bold text-2xl'>{product.price} Taka</p>}
-
-
-        //         <div>
-        //             <div className='flex mt-7 '>
-        //                 <h3 className='font-bold mr-2'>Quantity </h3>
-        //                 {
-        //                     quantity > 1 &&
-        //                     <svg onClick={(e) => { setQuantity(quantity - 1) }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 ml-3 h-6 cursor-pointer">
-        //                         <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
-        //                     </svg>
-        //                 }
-        //                 <span className='px-10'>{quantity}</span>
-        //                 <svg onClick={(e) => { setQuantity(quantity + 1) }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 cursor-pointer">
-        //                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-        //                 </svg>
-
-        //             </div>
-        //             <button ref={buttonRef} onClick={() => {handleBuyProduct(product, price, quantity); setMakeHidden('hidden')}} className={`btn btn-primary mt-5 ${makeHidden}`}><small>Buy Now</small></button>
-        //         </div>
-        //         <p className='mt-3'>{product.description}</p>
-
-        //     </div>
-
-
-        // </div>
+       
     );
 };
 

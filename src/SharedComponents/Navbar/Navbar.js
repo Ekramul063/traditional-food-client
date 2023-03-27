@@ -24,7 +24,7 @@ const Navbar = ({setOpenSidebar,openSidebar}) => {
   const navMenuItem =
     <React.Fragment>
       <li><Link to={'/'}>Home</Link> </li>
-      <li><Link to={'/products'}>Products</Link> </li>
+      <li><Link to={'/products'}>Shop</Link> </li>
       {
         dbUser.role === 'admin' || dbUser.seller === true ?
           <li><Link to={'/dashboard'}>Dashboard</Link></li>
@@ -37,15 +37,15 @@ const Navbar = ({setOpenSidebar,openSidebar}) => {
        
       }
       {user?.uid ?
-        <Link onClick={handleLogOut}><button className='btn-sm btn-primary font-semibold text-white'>SignOut</button></Link>
+        <Link onClick={handleLogOut}><button className='btn-sm  rounded-md bg-[#000] font-semibold text-white text-sm '>SignOut</button></Link>
         :
-        <Link to={'/login'}><button className='btn-sm btn-primary font-semibold text-white'>SignIn</button></Link>
+        <Link to={'/login'}><button className='btn-sm bg-[#000] rounded-md font-semibold text-white mx-4 text-sm'>SignIn</button></Link>
       }
 
     </React.Fragment>
   return (
     <div>
-      <div className="navbar bg-secondary">
+      <div className="navbar bg-[#014001] py-3">
         <div className="navbar-start">
           <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost md:hidden lg:hidden">

@@ -36,9 +36,6 @@ const router = createBrowserRouter([
             },
             {
                 path:'/products',
-                loader: async () => {
-                    return fetch('https://tradional-foodie-server.vercel.app/products');
-                  },
                 element:<Products></Products>
             },
             {

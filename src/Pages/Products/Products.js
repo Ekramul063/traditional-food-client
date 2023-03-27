@@ -1,27 +1,71 @@
-import React from 'react';
+import { useQuery } from '@tanstack/react-query';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useLoaderData } from 'react-router-dom';
+import Loading from '../../Components/Loading/Loading'
 import ProductCard from './ProductCard';
 
 const Products = () => {
-    const products = useLoaderData([]);
+    // const {products,count} = useLoaderData([]);
+    const [size,setSize]=useState(10);
+    const [page,setPage]=useState(0);
+    
+    const [products,setProducts]= useState([]);
+    const [count,setCount]=useState(0);
+    const pages = Math.ceil(count/size);
+    const {data,isLoading} = useQuery({
+        queryKey: [page,size],
+        queryFn: async () => {
+            const res = await fetch(`https://tradional-foodie-server.vercel.app/products?page=${page}&size=${size}`);
+            const data = await res.json();
+            setCount(data.count);
+            setProducts(data.products);
+            return data;
+        }
+    })
+
+    // useEffect(()=>{
+    //     const url = `http://localhost:5000/products?page=${page}&size=${size}`;
+    //     fetch(url)
+    //     .then(res => res.json())
+    //     .then(data =>{
+    //         setCount(data.count);
+    //         setProducts(data.products);
+    //     })
+    // },[page,size])
+    
+    const [activePage,setActivePage]=useState('btn-active');
+    if(isLoading){
+        return <Loading></Loading>
+    }
     return (
         <div>
-        {/* <div className="lg:w-1/2 md:w-3/2 sm:w-full p-3 mx-auto">
-          <input  type="text" placeholder="Search" className="input w-full input-border border-primary" />
-          <button className='bg-primary border-primary mt-[-1] h-[47px] lg:w-[120px] md:w-[90px] sm:w-[90px] lg:ml-[-121px] md:ml-[-91px] sm:ml[-91px]'>Search</button>
-        </div> */}
             <div className='p-8'>
                 <Helmet><title>products | Traditional Foodie</title></Helmet>
                 {
                    products.length < 1 &&
                    <p className='text-red font-black text-xl text-center text-red-800'>No Product available</p>
                 }
-                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
                     {
                         products.map(product => <ProductCard key={product._id} product={product}></ProductCard>)
                     }
                 </div>
+            </div>
+            <div className='btn-group flex justify-center pt-10 pb-5 items-center'>
+                {
+                    
+                   [...Array(pages).keys()].map(number => <button className={'btn border-emerald-[#000] text-black hover:text-white'} onClick={()=>setPage(number)} key={number} >{number}</button>)
+                }
+              <label className='ml-5'> Per page : 
+                  <select className='ml-2' onChange={(event)=> setSize(event.target.value)}>
+                    <option value={5}>5</option>
+                    <option value={8}>8</option>
+                    <option value={10} selected>10</option>
+                    <option value={15}>15</option>
+                    <option value={20}>20</option>
+                    <option value={30}>30</option>
+                </select>
+              </label>
             </div>
         </div>
     );

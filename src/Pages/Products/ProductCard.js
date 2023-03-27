@@ -7,40 +7,27 @@ const ProductCard = ({ product }) => {
     return (
         <div className="card w-full bg-base-100 shadow-xl relative " style={{ flex: 'none' }}>
             {discount &&
-                <div className='top-2 right-3 bg-secondary flex justify-center items-center  font-bold rounded-full text-red-600 absolute w-[50px] h-[50px]'><p>-{discount}%</p></div>
+                <div className='top-2 right-3 bg-primary flex justify-center items-center font-black rounded-full text-secondary absolute w-[42px] h-[42px] text-sm'><p>-{discount}%</p></div>
             }
 
-            <figure><img className='w-full h-[250px]' src={image} alt="Product" /></figure>
-            <div className="card-body" style={{flex:'none'}}>
-               <Link to={`/buy-products/${_id}`}><h2 className="card-title">{title}</h2></Link>
+            <Link to={`/buy-products/${_id}`}>  <figure><img className='w-full h-[150px]' src={image} alt="Product" /></figure></Link>
+            <div className="card-body py-2 px-3" style={{ flex: 'none' }}>
+                <Link to={`/buy-products/${_id}`}><h2 className=" text-sm lg:text-lg md:text-lg">{title}</h2></Link>
                 {discount &&
-                    <p className='font-bold'>{newPrice} Taka
-                        <del className='ml-5 text-red-700'>  {
+                    <p className='font-bold text-[12px] lg:text-lg md:text-lg'>{newPrice} Taka
+                        <del className='ml-5 text-secondary'>  {
                             price
                         }</del>
                     </p>}
 
-                {!discount && <p className='font-bold'>{price} Taka</p>}
+                {!discount && <p className='font-bold text-[12px] lg:text-lg md:text-lg'>{price} Taka</p>}
                 {
                     weight >= 1000 ?
-                        <p>Weight: {weight / 1000} kg</p>
+                        <p className=' text-[12px] lg:text-lg md:text-lg'>Weight: {weight / 1000} kg</p>
                         :
-                        <p>Weight: {weight} gm</p>
+                        <p className=' text-[12px] lg:text-lg md:text-lg'>Weight: {weight} gm</p>
 
                 }
-
-                {/* <p>{description}</p> */}
-                {/* <p>
-                    {description.length > 100 ?
-                        <p>{description.slice(0, 70)}......</p>
-                        :
-                        <p>{description.slice(0, 100)}</p>
-                    }
-                </p> */}
-                <div className="card-actions justify-end">
-                    {/* The button to open modal */}
-                    <Link to={`/buy-products/${_id}`}> <button className="btn btn-primary">Buy</button> </Link>
-                </div>
             </div>
         </div>
     )

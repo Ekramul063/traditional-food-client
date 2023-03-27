@@ -21,7 +21,7 @@ const DashboardLayout = () => {
         <div>
             <Navbar></Navbar>
             <div className="flex">
-                <div className={`transition-all relative sidebar w-[200px] lg:w-[230px] md:w-[230px] lg:px-5 bg-[#4c4a4a] h-[100vh] ${openSidebar ? "block" : "hidden"} lg:block md:block`}>
+                <div className={`transition-all relative sidebar w-[200px] lg:w-[230px] md:w-[230px] lg:px-5 bg-[#4c4a4a]  ${openSidebar ? "block" : "hidden"} lg:block md:block`}>
                     <ul className="menu menu-compact bg-black-500 w-full font-bold text-[#ffffffe8]">
                         {
                             openSidebar && <div className='absolute right-[-23px] text-black lg:hidden md:hidden'><BsFillBackspaceFill onClick={() => { setOpenSidebar(false) }} className='text-2xl font-bold cursor-pointer'></BsFillBackspaceFill></div>
@@ -57,7 +57,7 @@ const DashboardLayout = () => {
                     <div className='absolute left-0 lg:hidden'> <BsFillArrowRightCircleFill onClick={() => setOpenSidebar(true)} className='text-2xl cursor-pointer'></BsFillArrowRightCircleFill></div>
 
                 }
-                <div className="overflow-auto">
+                <div className="overflow-auto content-area h-[100vh]">
                     <Outlet>
 
                     </Outlet>

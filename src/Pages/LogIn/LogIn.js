@@ -44,7 +44,9 @@ const LogIn = () => {
             <Helmet><title>Traditional/Login</title></Helmet>
 
             <div className='w-full lg:w-[38%] md:[38%] px-5 md:px-10 lg:px-10 py-10 shadow-2xl rounded-md'>
-                <h3 className='text-2xl font-bold text-center mb-5'>Sign In</h3>
+                <h3 className='text-2xl font-bold text-center mb-3'>Sign In</h3>
+                <h3 className='text-center font-bold text-sm mb-3'>Admin: ekramulhasan063@gmail.com || Password: 1234A@</h3>
+
                 <form onSubmit={handleSubmit(handleSignIn)}>
 
                     <div className="form-control">

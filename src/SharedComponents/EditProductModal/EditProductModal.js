@@ -107,7 +107,7 @@ const EditProductModal = ({ product, setEditingProduct, refetch }) => {
             <input type="checkbox" id="editProduct-modal" className="modal-toggle" />
             <div className="modal">
                 <div className="modal-box relative max-w-[50rem]">
-                    <label htmlFor="editProduct-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+                    <label onClick={()=>{  setEditingProduct(null)}} htmlFor="editProduct-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
 
                     <div className='w-full  px-5 py-5 shadow-2xl rounded-md my-10 mx-auto '>
                         <h3 className='text-2xl font-bold text-center mb-5'>Add Product</h3>

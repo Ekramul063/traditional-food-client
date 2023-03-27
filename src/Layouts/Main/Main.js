@@ -9,13 +9,6 @@ const Main = () => {
         <div>
             <Navbar></Navbar>
             <div className="flex">
-                {/* <div className="sidebar">
-                    <ul className="menu menu-compact bg-base-100 w-full ">
-                        <li><a>Item 1</a></li>
-                        <li><a>Item 2</a></li>
-                        <li><a>Item 3</a></li>
-                    </ul>
-                </div> */}
                 <div className="content-area ">
                     <Outlet>
 

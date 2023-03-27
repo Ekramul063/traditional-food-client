@@ -8,8 +8,9 @@ module.exports = {
     themes:[
       {
       traditionalFoodieTheme:{
-        primary:'#fdd670',
-        secondary:'#40BFFF'
+        //primary:'#fdd670',
+        primary:'#014001',
+        secondary:'#BA0000'
       },
     }]
   },
