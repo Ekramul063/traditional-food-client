@@ -1,0 +1,32 @@
+.slide_item{
+    position: relative;
+    cursor: pointer;
+}
+.feature_title{
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    color:#FFFFFF;
+    z-index: 10;
+    font-size: 20px;
+    font-weight: 900;
+    display: none;
+    transition: all.3s;
+}
+
+
+.slide_item:hover::after{
+    content:'';
+    background-color: rgba(0,0,0,0.5);
+    left: 0;
+    top: 0;
+    width: 100%;
+    height:100%;
+    position: absolute;
+    transition: all.3s;
+
+}
+.slide_item:hover .feature_title{
+    display: block;
+}

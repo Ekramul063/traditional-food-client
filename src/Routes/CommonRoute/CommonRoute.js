@@ -16,6 +16,9 @@ import ProductDetails from '../../Pages/ProductDetails/ProductDetails';
 import AdminRoute from '../AdminRoute/AdminRoute';
 import MyOrders from '../../Pages/Dashboard/MyOrders/MyOrders';
 import Payment from '../../Pages/Payment/Payment';
+import DistrictProducts from '../../Pages/Products/DistrictProducts';
+import Blogs from '../../Pages/Blogs/Blogs';
+import AddBlogs from '../../Pages/Dashboard/AddBlogs/AddBlogs';
 
 
 const router = createBrowserRouter([
@@ -43,8 +46,12 @@ const router = createBrowserRouter([
                 loader: async ({params}) => {
                     return fetch(`https://tradional-foodie-server.vercel.app/products/${params.district}`);
                   },
-                element:<Products></Products>
+                element:<DistrictProducts></DistrictProducts>
             },
+            {
+                path:'/blogs',
+                element:<Blogs></Blogs>
+            }
         ]
     },
     
@@ -61,6 +68,7 @@ const router = createBrowserRouter([
         path:'/payment',
         element:<Payment></Payment>
     },
+
     {
         path:'/dashboard',
         element:<PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
@@ -68,6 +76,10 @@ const router = createBrowserRouter([
             {
                 path:'/dashboard',
                 element:<MyProfile></MyProfile>
+            },
+            {
+                path:'/dashboard/add-blogs',
+                element:<AddBlogs></AddBlogs>
             },
             {
                 path:'/dashboard/add-product',

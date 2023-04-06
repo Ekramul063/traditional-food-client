@@ -12,13 +12,13 @@ const ProductDetails = () => {
     const { user } = useContext(AuthContext);
     const [quantity, setQuantity] = useState(1);
     const [price, setPrice] = useState(0);
-    const[loading,setLoading]= useState('');
+    const [loading, setLoading] = useState('');
     const buttonRef = useRef(null);
 
 
-    const handleBuyProduct = (product, price, quantity, productHistory) => {
+    const handleBuyProduct = () => {
         setLoading(true)
-        if(!user?.uid){
+        if (!user?.uid) {
             setLoading(false);
             return toast.error('Please log in first');
 
@@ -46,7 +46,7 @@ const ProductDetails = () => {
                 if (data.acknowledged) {
                     toast.success('Purchase product successfully');
                     setLoading(false);
-                    
+
                 }
             });
 
@@ -73,6 +73,13 @@ const ProductDetails = () => {
                             }</del><span className='text-xl'> - {product.discount}%</span>
                         </p>}
                     {!product.discount && <p className='font-bold text-2xl'>{product.price} Taka</p>}
+                    {product.weight &&
+                        product.weight >= 1000 ?
+                            <p className=' text-[14px] font-bold'>Weight: {product.weight / 1000} kg</p>
+                            :
+                            <p className=' text-[14px] font-bold '>Weight: {product.weight} gm</p>
+
+                    }
 
 
                     <div className='flex mt-5 '>
@@ -89,16 +96,16 @@ const ProductDetails = () => {
                         </svg>
                     </div>
                     <div className="card-actions py-3">
-                        <button  disabled={loading} ref={buttonRef}  className={`btn btn-primary w-[210px] disabled:opacity-[0.6]`}  onClick={() => {handleBuyProduct(product, price, quantity)}}>Buy Now</button>
+                        <button disabled={loading} ref={buttonRef} className={`btn btn-primary w-[210px] disabled:opacity-[0.6]`} onClick={() => { handleBuyProduct(product, price, quantity) }}>Buy Now</button>
                     </div>
                 </div>
             </div>
             <p>{product.description}</p>
             {product.productHistory &&
-                 <p className='mt-5 font-semibold text-red-900 text-justify'> <span className='font bold text-red-700 text-lg block underline'>History of this Food</span>{ product.productHistory}</p>
+                <p className='mt-5 font-semibold text-red-900 text-justify'> <span className='font bold text-red-700 text-lg block underline'>History of this Food</span>{product.productHistory}</p>
             }
         </div>
-       
+
     );
 };
 

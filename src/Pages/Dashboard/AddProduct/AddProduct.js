@@ -9,12 +9,6 @@ import { toast } from 'react-hot-toast';
 import { AuthContext } from '../../../Context/AuthProvider/AuthProvider';
 
 const AddProduct = () => {
-   
-    //  {"district":"Sylhet","Upazilas":[ "Balaganj", "Biyanibazar", "Biswanath", "Companyganj", "Fenchuganj", "Golapganj", "Goainghat", "Jaintapur", "Kanaighat","Sylhet Sadar", "Jokiganj"," Dakshin Surma", "Osmani"]},
-    //  {"district":"Moulvibazar","Upazilas":[ "Baralekha", "Kamalganj", "Kulaura", "Moulvibazar Sadar", "Rajnagar", "Srimangal", "Juri"]},
-    //  {"district":"Habiganj","Upazilas":[ "Nabiganj", "Bahubal", "Ajmiriganj", "Baniachang", "Lakhai", "Chunarughat", "Habiganj Sadar"," Madhavpur Upazila", "Shaistaganj"]},
-    //  {"district":"Sunamganj","Upazilas":[  "Sunamganj Sadar", "South Sunamganj", "Biswambharpur", "Chatak", "Jagannathpur", "Doarabazar", "Tahirpur", "Dharmapasha", "Jamalganj", "Shalla", "Dirai"]}
-     
     const { user } = useContext(AuthContext);
     const [price, setPrice] = useState(null);
     const [discount, setDiscount] = useState(null);
@@ -59,35 +53,36 @@ const AddProduct = () => {
         const image = data.image[0];
         const formData = new FormData();
         formData.append('image', image);
-        fetch(`https://api.imgbb.com/1/upload?key=${imageHostKey}`, {
-            method: 'POST',
-            body: formData
-        })
-            .then(res => res.json())
-            .then(imgData => {
-                console.log(imgData.data.url)
-                const productData = {
-                    ...data, newPrice,
-                    image: imgData.data.url,
-                    seller: user?.email,
-                }
-                fetch('https://tradional-foodie-server.vercel.app/products', {
-                    method: 'POST',
-                    headers: {
-                        'content-type': 'application/json',
-                    },
-                    body: JSON.stringify(productData)
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.acknowledged) {
-                            toast.success('Product added successfully')
-                            reset();
-                            setPrice(null)
-                        }
-                    })
+        console.log(image);
+        // fetch(`https://api.imgbb.com/1/upload?key=${imageHostKey}`, {
+        //     method: 'POST',
+        //     body: formData
+        // })
+        //     .then(res => res.json())
+        //     .then(imgData => {
+        //         console.log(imgData.data.url)
+        //         const productData = {
+        //             ...data, newPrice,
+        //             image: imgData.data.url,
+        //             seller: user?.email,
+        //         }
+        //         fetch('https://tradional-foodie-server.vercel.app/products', {
+        //             method: 'POST',
+        //             headers: {
+        //                 'content-type': 'application/json',
+        //             },
+        //             body: JSON.stringify(productData)
+        //         })
+        //             .then(res => res.json())
+        //             .then(data => {
+        //                 if (data.acknowledged) {
+        //                     toast.success('Product added successfully')
+        //                     reset();
+        //                     setPrice(null)
+        //                 }
+        //             })
 
-            })
+        //     })
 
     }
 
@@ -99,8 +94,11 @@ const AddProduct = () => {
                 <h3 className='text-2xl font-bold text-center mb-5'>Add Product</h3>
                 <form onSubmit={handleSubmit(handleAddProduct)}>
                     <div className="flex w-full justify-between flex-wrap">
+                        {/* <label className="label">
+                            <span className="text-default label-text">Select Division</span>
+                        </label>
                         <select className="select select-success w-full" onChange={(e) => handleSelectDistrict(e)}>
-                            <option disabled selected>Division</option>
+                            <option disabled selected>Dhaka</option>
                             {
                                 locations.map(location => <option key={location._id}>{location.divison}</option>)
                             }
@@ -134,6 +132,15 @@ const AddProduct = () => {
 
                         <div className="form-control  w-full md:w-[49%] lg:w-[49%]">
                             <label className="label">
+                                <span className="text-default label-text">Alternative of Weight</span>
+                            </label>
+                            <input {...register("alternativeAmount")} type="text" className="input input-bordered" />
+
+                        </div>
+
+
+                        <div className="form-control  w-full md:w-[49%] lg:w-[49%]">
+                            <label className="label">
                                 <span className="text-default label-text">Price</span>
                             </label>
                             <input {...register("price")} onBlur={(e) => { setPrice(e.target.value) }} type="number" className="input input-bordered" />
@@ -164,14 +171,6 @@ const AddProduct = () => {
 
                         </div>
 
-                        <div className="form-control  w-full md:w-[49%] lg:w-[49%]">
-                            <label className="label">
-                                <span className="text-default label-text">Product Image</span>
-                            </label>
-                            <input  {...register("image", { required: "Image field is required" })} type="file" className="file-input file-input-bordered file-input-secondary w-full" />
-                            {errors.image && <span className='text-red-800'>{errors.image.message}</span>}
-
-                        </div>
 
                         <div className="form-control  w-full md:w-[49%] lg:w-[49%]">
                             <label className="label">
@@ -185,6 +184,14 @@ const AddProduct = () => {
                                 <span className="text-default label-text">Description</span>
                             </label>
                             <textarea {...register("description")} type="text" className="textarea  textarea-bordered h-28" />
+
+                        </div> */}
+                        <div className="form-control  w-full md:w-[49%] lg:w-[49%]">
+                            <label className="label">
+                                <span className="text-default label-text">Product Image</span>
+                            </label>
+                            <input  {...register("image", { required: "Image field is required" })} type="file" className="file-input file-input-bordered file-input-secondary w-full" />
+                            {errors.image && <span className='text-red-800'>{errors.image.message}</span>}
 
                         </div>
 

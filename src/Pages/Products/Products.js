@@ -23,15 +23,6 @@ const Products = () => {
         }
     })
 
-    // useEffect(()=>{
-    //     const url = `http://localhost:5000/products?page=${page}&size=${size}`;
-    //     fetch(url)
-    //     .then(res => res.json())
-    //     .then(data =>{
-    //         setCount(data.count);
-    //         setProducts(data.products);
-    //     })
-    // },[page,size])
     
     const [activePage,setActivePage]=useState('btn-active');
     if(isLoading){
@@ -54,7 +45,7 @@ const Products = () => {
             <div className='btn-group flex justify-center pt-10 pb-5 items-center'>
                 {
                     
-                   [...Array(pages).keys()].map(number => <button className={'btn border-emerald-[#000] text-black hover:text-white'} onClick={()=>setPage(number)} key={number} >{number}</button>)
+                   [...Array(pages).keys()].map(number => <button className={'btn border-emerald-[#000] text-black hover:text-white'} onClick={()=>setPage(number)} key={number} >{number+1}</button>)
                 }
               <label className='ml-5'> Per page : 
                   <select className='ml-2' onChange={(event)=> setSize(event.target.value)}>

@@ -28,6 +28,7 @@ const DashboardLayout = () => {
 
                         }
                         <li><Link to={'/dashboard'}>MyProfile</Link></li>
+                        <li><Link to={'/dashboard/add-blogs'}>Add Blogs</Link></li>
                         {dbUser.role === 'admin' &&
                             <li><Link to={'/dashboard/manage-seller'}>Sellers</Link></li>
                         }

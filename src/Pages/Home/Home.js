@@ -4,10 +4,15 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import HeaderSlider from './HeaderSlider/HeaderSlider'
+import BlogsHome from './BlogsHome/BlogsHome';
+import Services from './Services/Services';
+import FeatureProduct from './FeatureProduct/FeatureProduct';
+import Review from './Review/Review';
+import AddReview from './AddReview/AddReview';
 
 const Home = () => {
     const [allDistricts, setAllDistricts] = useState([]);
-    const [selectedDivison, setSelectedDivison] = useState(null)
+    const [selectedDivison, setSelectedDivison] = useState('Dhaka')
     const [districts, setDistricts] = useState([]);
 
     useEffect(() => {
@@ -42,7 +47,6 @@ const Home = () => {
             setSelectedDivison(null)
         }
     }, [selectedDivison])
-    console.log(selectedDivison);
     return (
         <div className=' overflow-hidden'>
             <Helmet><title>Home | Traditional Foodie</title></Helmet>
@@ -77,6 +81,11 @@ const Home = () => {
                 </div>
 
             </div>
+            <Services></Services>
+            <FeatureProduct></FeatureProduct>
+            <BlogsHome></BlogsHome>
+            <Review></Review>
+            <AddReview></AddReview>
         </div>
     );
 };
