@@ -40,7 +40,7 @@ const LogIn = () => {
     }
 
     return (
-        <div className='bg-gradient-to-r from-green-300 to-blue-300 h-[100vh] flex justify-center items-center'>
+        <div className='bg-gradient-to-r from-green-300 to-red-300 h-[100vh] flex justify-center items-center'>
             <Helmet><title>Traditional/Login</title></Helmet>
 
             <div className='w-full lg:w-[38%] md:[38%] px-5 md:px-10 lg:px-10 py-10 shadow-2xl rounded-md'>

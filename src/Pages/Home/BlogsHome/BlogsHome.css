@@ -11,17 +11,15 @@
 }
 
 .slick-prev {
-    left: 1px;
+    left: 6px;
     z-index: 10;
 }
 .slick-next {
-    right: 20px;
+    right: 26px;
 }
 .slick-slider {
     margin:0 -15px;
 }
 .slick-slide {
     padding:10px;
-    /* margin-right:15px;
-    margin-left:15px; */
 }

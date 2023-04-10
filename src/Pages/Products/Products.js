@@ -22,20 +22,16 @@ const Products = () => {
             return data;
         }
     })
-
     
-    const [activePage,setActivePage]=useState('btn-active');
-    if(isLoading){
+   // const [activePage,setActivePage]=useState('btn-active');
+
+    if(products.length<1){
         return <Loading></Loading>
     }
     return (
         <div>
             <div className='p-8'>
                 <Helmet><title>products | Traditional Foodie</title></Helmet>
-                {
-                   products.length < 1 &&
-                   <p className='text-red font-black text-xl text-center text-red-800'>No Product available</p>
-                }
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
                     {
                         products.map(product => <ProductCard key={product._id} product={product}></ProductCard>)

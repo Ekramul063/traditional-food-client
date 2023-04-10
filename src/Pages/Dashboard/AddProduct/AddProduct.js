@@ -53,36 +53,35 @@ const AddProduct = () => {
         const image = data.image[0];
         const formData = new FormData();
         formData.append('image', image);
-        console.log(image);
-        // fetch(`https://api.imgbb.com/1/upload?key=${imageHostKey}`, {
-        //     method: 'POST',
-        //     body: formData
-        // })
-        //     .then(res => res.json())
-        //     .then(imgData => {
-        //         console.log(imgData.data.url)
-        //         const productData = {
-        //             ...data, newPrice,
-        //             image: imgData.data.url,
-        //             seller: user?.email,
-        //         }
-        //         fetch('https://tradional-foodie-server.vercel.app/products', {
-        //             method: 'POST',
-        //             headers: {
-        //                 'content-type': 'application/json',
-        //             },
-        //             body: JSON.stringify(productData)
-        //         })
-        //             .then(res => res.json())
-        //             .then(data => {
-        //                 if (data.acknowledged) {
-        //                     toast.success('Product added successfully')
-        //                     reset();
-        //                     setPrice(null)
-        //                 }
-        //             })
+        fetch(`https://api.imgbb.com/1/upload?key=${imageHostKey}`, {
+            method: 'POST',
+            body: formData
+        })
+            .then(res => res.json())
+            .then(imgData => {
+                console.log(imgData.data.url)
+                const productData = {
+                    ...data, newPrice,
+                    image: imgData.data.url,
+                    seller: user?.email,
+                }
+                fetch('https://tradional-foodie-server.vercel.app/products', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json',
+                    },
+                    body: JSON.stringify(productData)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.acknowledged) {
+                            toast.success('Product added successfully')
+                            reset();
+                            setPrice(null)
+                        }
+                    })
 
-        //     })
+            })
 
     }
 
@@ -94,7 +93,7 @@ const AddProduct = () => {
                 <h3 className='text-2xl font-bold text-center mb-5'>Add Product</h3>
                 <form onSubmit={handleSubmit(handleAddProduct)}>
                     <div className="flex w-full justify-between flex-wrap">
-                        {/* <label className="label">
+                        <label className="label">
                             <span className="text-default label-text">Select Division</span>
                         </label>
                         <select className="select select-success w-full" onChange={(e) => handleSelectDistrict(e)}>
@@ -185,7 +184,7 @@ const AddProduct = () => {
                             </label>
                             <textarea {...register("description")} type="text" className="textarea  textarea-bordered h-28" />
 
-                        </div> */}
+                        </div>
                         <div className="form-control  w-full md:w-[49%] lg:w-[49%]">
                             <label className="label">
                                 <span className="text-default label-text">Product Image</span>

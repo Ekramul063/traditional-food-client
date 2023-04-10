@@ -26,7 +26,7 @@ const Navbar = ({setOpenSidebar,openSidebar}) => {
       <li><Link to={'/'}>Home</Link> </li>
       <li><Link to={'/products'}>Shop</Link> </li>
       <li><Link to={'/blogs'}>Blogs</Link> </li>
-      <li><Link to={'/blogs'}>About</Link> </li>
+      <li><Link to={'/about'}>About</Link> </li>
       {
         dbUser.role === 'admin' || dbUser.seller === true ?
           <li><Link to={'/dashboard'}>Dashboard</Link></li>

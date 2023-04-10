@@ -21,11 +21,6 @@ const CreateAccount = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
     const handleCreateAccount = data => {
-        if (data.password !== data.confirmPassword) {
-            setCreateAccountError('Passwords must match');
-            return;
-        }
-        setCreateAccountError('');
 
         if (data.image) {
             const image = data.image[0];
@@ -82,7 +77,7 @@ const CreateAccount = () => {
 
 
     return (
-        <div className='bg-gradient-to-r from-green-300 to-blue-300 h-full flex justify-center items-center'>
+        <div className='bg-gradient-to-r from-green-300 to-red-300 h-full flex justify-center items-center'>
             <Helmet><title>Create-Account | Traditional Foodie</title></Helmet>
 
             <div className='w-full lg:w-[38%] md:[38%] px-10 py-10 shadow-2xl rounded-md'>
@@ -128,15 +123,7 @@ const CreateAccount = () => {
                             type="Password" className="input input-bordered" />
                         {errors.password && <span className='text-red-800'>{errors.password.message}</span>}
                     </div>
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="text-default label-text">Confirm Password</span>
-                        </label>
-                        <input  {...register("confirmPassword", { required: "Confirm Password field is required" })}
-                            type="password" className="input input-bordered" />
-                        {errors.confirmPassword && <span className='text-red-800'>{errors.confirmPassword.message}</span>}
-
-                    </div>
+                   
                     <div className="form-control  w-full">
                         <label className="label">
                             <span className="text-default label-text">profile pictures</span>

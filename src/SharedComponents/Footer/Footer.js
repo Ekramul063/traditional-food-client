@@ -5,7 +5,7 @@ import logo from '../../asets/logo.png'
 const Footer = () => {
   return (
     <div>
-      <footer className="p-10 bg-base-200 text-base-content grid grid-cols-1 lg:grid-cols-3 md:grid-cols-3 gap-5">
+      <footer className="p-10 bg-base-200 text-base-content grid grid-cols-1 lg:grid-cols-4 md:grid-cols-4 gap-5">
         <div className=''>
           <div className='max-w-[120px] mb-5'>
             <Link to={'/'}><img className='w-full' src={logo} /></Link>
@@ -19,11 +19,19 @@ const Footer = () => {
           <li className='list-none'><Link to={'/blogs'}>Blogs</Link> </li>
           <li className='list-none'><Link to={'/about'}>About</Link> </li>
         </div>
+
         <div className='flex flex-col'>
           <span className="footer-title">Legal</span>
           <a className="link link-hover">Terms of use</a>
           <a className="link link-hover">Privacy policy</a>
           <a className="link link-hover">Cookie policy</a>
+        </div>
+        <div className='flex flex-col'>
+          <span className="footer-title">FOLLOW US</span>
+          <a className="link link-hover">Facebook</a>
+          <a className="link link-hover">twitter</a>
+          <a className="link link-hover">Instagram</a>
+          <a className="link link-hover">YouTube</a>
         </div>
 
       </footer>
